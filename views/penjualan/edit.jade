@@ -1,0 +1,61 @@
+extends ../layout/base 
+block content 
+	section.content-header 
+		h1 
+			| Edit Data Beras
+			small 
+		ol.breadcrumb 
+			li 
+				a(href='#') 
+					i.fa.fa-dashboard
+					| Level 
+			li.active Here 
+	section.content
+		.box
+			.box-header.with-border
+				h3.box-title
+					| Data Beras
+				.box-tools.pull-right
+					button(type='button', data-widget='collapse', data-toggle='tooltip',title='collapse').btn.btn-box-tool
+						i.fa.fa-minus
+					
+			.box-body
+				form(role='form',method='post' action='/penjualan/edit/#{(id==undefined) ? penjualan.id : id}')
+					.row
+						
+						.col-xs-6
+							.box-body
+								- if (messages.msg_error) 
+									.alert.alert-danger.alert-dismissable 
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') 
+											| ×
+										h4
+											i.icon.fa.fa-ban
+											| Alert! 
+										| !{messages.msg_error}
+								- if (messages.msg_info) 
+									.alert.alert-success.alert-dismissable 
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') 
+											| ×
+										h4
+											i.icon.fa.fa-ban
+											| Berhasil! 
+										| !{messages.msg_info}
+								.form-group
+									label
+										| Jenis Beras
+									input(type='text',value="#{penjualan.jenisberas}",name='jenisberas',placeholder='Enter Jenis Beras', autofocus).form-control
+								.form-group
+									label
+										| Harga Per Kilogram
+									input(type='text',value="#{ (harga == undefined) ? penjualan.harga : harga }",name='harga',placeholder='Enter Harga').form-control
+								.form-group
+									label
+										| Stok Per Kilogram
+									input(type='text',value="#{ (stok == undefined) ? penjualan.stok : stok }",name='stok',placeholder='Enter Stok').form-control
+								input(type="hidden",name="_method", value="PUT")
+								button(type='submit').btn.btn-primary
+									i.fa.fa-pencil 
+									|  Edit
+								a(href='/penjualan').btn.btn-primary.pull-right
+									| Kembali

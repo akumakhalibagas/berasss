@@ -1,0 +1,74 @@
+extends ../layout/base 
+block content 
+	section.content-header 
+			h1
+			|  
+			img(src='/adminlte/dist/img/tampilan1.jpeg',alt='User Image', width='320')
+			h2.box-title
+				|Data Stok Beras di FreshRice 
+			small
+			|Beras Dengan Kualitas Terbaik dan Beras Pilihan Bagi Ibu Rumah Tangga
+			
+
+	section.content
+		.box
+
+			.box-header.with-border
+				h3.box-title
+					| Data Beras
+				.box-tools.pull-right
+					button(type='button', data-widget='collapse', data-toggle='tooltip',title='collapse').btn.btn-box-tool
+						i.fa.fa-minus
+			.box-body
+				- if(messages.msg_info)
+					.alert.alert-success.alert-dismissable
+						button.close(type='button', data-dismiss='alert', aria-hidden='true')
+							| ×
+						h4
+							i.icon.fa.fa-check
+							| Berhasil!
+						| !{messages.msg_info}
+				- if(messages.msg_error)
+					.alert.alert-danger.alert-dismissable
+						button.close(type='button', data-dismiss='alert', aria-hidden='true')
+							| ×
+						h4
+							i.icon.fa.fa-ban
+							| Alert!
+						| !{messages.msg_error}
+				a(href='penjualan/add/').pull-left.btn.btn-primary
+					i.fa.fa-plus 
+					|  Tambah Data Beras
+				.data-table
+					table.table.table-bordered
+						tr
+							th
+								| Id
+							th
+								| Jenis Beras
+							th
+								| Harga Per Kilogram
+							th
+								| Stok Per Kilogram
+							th
+								| Action
+							if messages.msg_error
+								| !{messages.msg_error}
+							else
+								for row, index in penjualan 
+									tr
+										td #{index+1}
+										td #{row.jenisberas}
+										td #{row.harga}
+										td #{row.stok}
+										
+										td
+											div(style='display:inline-block')
+												a(href='/penjualan/edit/#{row.id}').btn.btn-sm.btn-primary
+														i.fa.fa-edit
+											| 
+											div(style='display:inline-block')
+												form(method='post', action='/penjualan/delete/#{row.id}')
+													input(type="hidden",name="_method", value="DELETE")
+													button.btn.btn-sm.btn-danger(type='submit')
+														i.fa.fa-remove
